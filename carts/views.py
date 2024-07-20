@@ -23,6 +23,7 @@ class CartItemList(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def post(self, request): 
+        print(request.user)
         cart = Cart.get_user_cart(request.user)
         food = Food.get_food_by_id(request.data['food'])
         

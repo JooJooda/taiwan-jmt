@@ -86,9 +86,10 @@ def google_callback(request):
         res = JsonResponse(
             {
                 "user": {
-                "id": user.id,
+                    "id": user.id,
                     "username": user.username,
                     "email": user.email,
+                    "cart": user.cart.id,
                 },
                 "message": "login success",
                 "token": {

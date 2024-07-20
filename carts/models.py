@@ -13,6 +13,11 @@ class Cart(models.Model):
             return Cart.objects.get(user=user)
         except Cart.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    def create_cart(user):
+        cart = Cart.objects.create(user=user)
+        cart.save()
+        return cart
         
 
 class CartItem(models.Model):

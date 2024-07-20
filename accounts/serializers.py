@@ -1,11 +1,15 @@
 from rest_framework import serializers
 from .models import *
+from carts.models import *
+from carts.serializers import *
 from rest_framework_simplejwt.serializers import RefreshToken
 
 class UserSerializer(serializers.ModelSerializer):
+    cart = CartSerializer(read_only=True)
+
     class Meta:
         model = User
-        fields = ['username','email']
+        fields = ['username','email', 'cart']
 
 class OAuthSerializer(serializers.ModelSerializer):
     email = serializers.CharField(required=True)
@@ -28,6 +32,7 @@ class OAuthSerializer(serializers.ModelSerializer):
         
         if user is None:
             user = User.objects.create(email=email, username=username)
+            Cart.create_cart(user=user)
             user.save()
         
         token = RefreshToken.for_user(user)
