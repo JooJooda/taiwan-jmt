@@ -20,7 +20,7 @@ class CartItemList(APIView):
         # 역참조
         cart_items = cart.cartItems.all()
         serializer = CartItemSerializer(cart_items, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     def post(self, request): 
         cart = Cart.get_user_cart(request.user)
@@ -43,7 +43,7 @@ class CartItemDetail(APIView):
         cart = Cart.get_user_cart(user)
         cart_item = get_object_or_404(cart.cartItems, id=item_id)
         serializer = CartItemSerializer(cart_item)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
         
 
     def delete(self, request, item_id):

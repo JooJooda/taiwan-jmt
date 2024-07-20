@@ -37,7 +37,7 @@ class UserManager(BaseUserManager):
         return user 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=20, null=False, blank=False, unique=True)
+    username = models.CharField(max_length=64, default='존맛탱구리')
     email = models.EmailField(null=False, blank=False, unique=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -49,4 +49,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
-   
+
+    def get_user_by_email(email):
+        try:
+            return User.objects.get(email=email)
+        except Exception:
+            return None
