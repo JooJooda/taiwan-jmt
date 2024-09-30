@@ -25,6 +25,14 @@ class UserDetail(APIView):
         serializer = UserSerializer(user)
         return Response(serializer.data)
     
+    def put(self, request):
+        user = request.user
+        user = get_object_or_404(User, id=user.id)
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 secret_file = os.path.join(BASE_DIR, "secrets.json")

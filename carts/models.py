@@ -19,8 +19,7 @@ class Cart(models.Model):
         cart.save()
         return cart
         
-
-class CartItem(models.Model):
+class CartFood(models.Model):
     id = models.AutoField(primary_key=True)
-    cart = models.ForeignKey(Cart, related_name="cartItems", on_delete=models.CASCADE)
-    food = models.ForeignKey(Food, related_name="cartItems", on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, related_name="cartFoods", on_delete=models.CASCADE)
+    food = models.ForeignKey(Food, related_name="cartFoods", on_delete=models.CASCADE)
